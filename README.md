@@ -70,13 +70,35 @@ emulator with `NTVCM` or `NTVCM_DIR`.
 The runner exits nonzero if any program fails and prints a pass/fail summary at
 the end.
 
-For a parallel run with output verification against Clang-generated baselines:
+For a parallel run with output verification against Clang-generated baselines
+using PowerShell 7:
 
 ```sh
-./runall.sh --update-baseline   # regenerate archive/baselines with Clang
-./runall.sh                     # build/run DCC tests in parallel and compare
-./runall.sh 10                  # verify one batch
-./runall.sh --serial            # sequential fallback for debugging
+pwsh ./runall.ps1 -UpdateBaseline   # regenerate archive/baselines with Clang
+pwsh ./runall.ps1                   # build/run DCC tests in parallel and compare
+pwsh ./runall.ps1 -Mode nopeep      # run without peephole optimization
+pwsh ./runall.ps1 -Mode full        # run both optimized and unoptimized builds
+pwsh ./runall.ps1 10                # verify one batch
+pwsh ./runall.ps1 -Serial           # sequential fallback for debugging
+```
+
+### Run modes
+
+`runall.ps1` accepts one optimization mode for each test run:
+
+| Mode | DCC build | Tests per source |
+| --- | --- | ---: |
+| `fast` | Peephole optimization enabled; default mode | 1 |
+| `nopeep` | Peephole optimization disabled with `dcc-peep=false` | 1 |
+| `full` | Runs both `fast` and `nopeep` builds | 2 |
+
+All modes compare output with the same Clang-generated baseline. Therefore a
+complete `full` run executes 1,800 tests for the 900 archived source files:
+
+```powershell
+pwsh ./runall.ps1 -Mode fast       # 900 optimized runs
+pwsh ./runall.ps1 -Mode nopeep     # 900 unoptimized runs
+pwsh ./runall.ps1 -Mode full       # 1,800 runs: both variants
 ```
 
 Baselines are keyed by batch and test name, so repeated names in different
@@ -128,6 +150,7 @@ checks pass.
 | `archive/` | Historical test batches |
 | `run-archive-batches.sh` | dcc/ntvcm runner for archived batches |
 | `runall.sh` | Parallel DCC runner with Clang output baselines |
+| `runall.ps1` | Portable PowerShell 7 parallel runner with Clang baselines |
 
 Generated build directories, `.COM` files, and test logs are not source
 artifacts and can be removed after a run.

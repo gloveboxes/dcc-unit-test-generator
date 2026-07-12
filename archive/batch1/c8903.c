@@ -1,8 +1,9 @@
 #include <stdio.h>
 
-static int crc16(const unsigned char *s)
+static unsigned short crc16(const unsigned char *s)
 {
-    int crc = 0xffff, i;
+    unsigned short crc = 0xffff;
+    int i;
     while (*s != 0) {
         crc ^= *s++;
         for (i = 0; i < 8; ++i)
@@ -12,6 +13,6 @@ static int crc16(const unsigned char *s)
 }
 int main(void)
 {
-    printf("c8903 crc=%04X\n", crc16((const unsigned char *)"dcc"));
+    printf("c8903 crc=%04X\n", (unsigned)crc16((const unsigned char *)"dcc"));
     return 0;
 }

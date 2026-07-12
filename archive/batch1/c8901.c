@@ -18,9 +18,10 @@ static void sort(int *a, int *tmp, int lo, int hi)
 }
 int main(void)
 {
-    int a[7] = {9, 1, 5, 3, 3, 8, 2}, t[7], i, sum = 0;
+    int a[7] = {9, 1, 5, 3, 3, 8, 2}, t[7], i;
+    long sum = 0;
     sort(a, t, 0, 6);
     for (i = 0; i < 7; ++i) sum = sum * 10 + a[i];
-    printf("c8901 sorted=%d\n", sum);
+    printf("c8901 sorted=%ld\n", sum);
     return 0;
 }

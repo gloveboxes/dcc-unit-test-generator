@@ -70,6 +70,21 @@ emulator with `NTVCM` or `NTVCM_DIR`.
 The runner exits nonzero if any program fails and prints a pass/fail summary at
 the end.
 
+For a parallel run with output verification against Clang-generated baselines:
+
+```sh
+./runall.sh --update-baseline   # regenerate archive/baselines with Clang
+./runall.sh                     # build/run DCC tests in parallel and compare
+./runall.sh 10                  # verify one batch
+./runall.sh --serial            # sequential fallback for debugging
+```
+
+Baselines are keyed by batch and test name, so repeated names in different
+archive batches do not collide. DCC build and emulator output is isolated per
+test; failures retain logs in `/tmp/dcc-archive-logs` by default. Set
+`ARCHIVE_JOBS` to change the concurrency limit and use `--keep-build` to retain
+build artifacts for a failing test.
+
 ## Validate active examples
 
 `validate-examples.sh` supports host-only, target-only, or combined validation
@@ -112,6 +127,7 @@ checks pass.
 | `validate-examples.sh` | Clang and dcc/ntvcm validation for active examples |
 | `archive/` | Historical test batches |
 | `run-archive-batches.sh` | dcc/ntvcm runner for archived batches |
+| `runall.sh` | Parallel DCC runner with Clang output baselines |
 
 Generated build directories, `.COM` files, and test logs are not source
 artifacts and can be removed after a run.

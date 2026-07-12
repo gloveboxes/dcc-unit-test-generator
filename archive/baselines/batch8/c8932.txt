@@ -1,0 +1,1 @@
+c8932 path=8,/usr/bin

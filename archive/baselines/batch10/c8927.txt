@@ -1,0 +1,1 @@
+c8927 medianfilter=75,12,13

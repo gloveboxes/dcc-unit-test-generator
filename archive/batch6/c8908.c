@@ -1,3 +1,3 @@
 #include <stdio.h>
-static int fixed_mul(int a,int b){return (a*b+50)/100;}
-int main(void){printf("c8908 fixed=%d,%d\n",fixed_mul(125,80),fixed_mul(333,250));return 0;}
+static long fixed_mul(long a,long b){return (a*b+50L)/100L;}
+int main(void){printf("c8908 fixed=%ld,%ld\n",fixed_mul(125L,80L),fixed_mul(333L,250L));return 0;}

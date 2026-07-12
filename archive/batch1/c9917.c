@@ -1,9 +1,10 @@
 #include <stdio.h>
+#include <stdint.h>
 
-static int rotate(int value, int shift)
+static uint16_t rotate(uint16_t value, int shift)
 {
-    unsigned bits = (unsigned)value;
-    return (int)((bits << shift) | (bits >> (16 - shift)));
+    uint16_t bits = value;
+    return (uint16_t)((bits << shift) | (bits >> (16 - shift)));
 }
 int main(void)
 {

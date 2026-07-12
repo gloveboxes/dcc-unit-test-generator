@@ -1,0 +1,1 @@
+c9930 palindrome=1,0
